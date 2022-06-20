@@ -1,16 +1,17 @@
 package example.com.githubconnect.data.model
 
-data class Repository (
-    val data: List<Datum>
-)
+import com.google.gson.annotations.SerializedName
 
-data class Datum (
+data class Repository (
     val id: Long,
+    @SerializedName("node_id")
     val nodeID: String,
     val name: String,
+    @SerializedName("full_name")
     val fullName: String,
     val private: Boolean,
     val owner: Owner,
+    @SerializedName("html_url")
     val htmlURL: String,
     val description: String,
     val fork: Boolean,
@@ -60,6 +61,7 @@ data class Datum (
     val svnURL: String,
     val homepage: String? = null,
     val size: Long,
+    @SerializedName("stargazers_count")
     val stargazersCount: Long,
     val watchersCount: Long,
     val language: Language? = null,
@@ -132,21 +134,35 @@ enum class SpdxID {
 data class Owner (
     val login: Login,
     val id: Long,
+    @SerializedName("node_id")
     val nodeID: OwnerNodeID,
+    @SerializedName("avatar_url")
     val avatarURL: String,
+    @SerializedName("gravatar_id")
     val gravatarID: String,
     val url: String,
+    @SerializedName("html_url")
     val htmlURL: String,
+    @SerializedName("followers_url")
     val followersURL: String,
+    @SerializedName("following_url")
     val followingURL: FollowingURL,
+    @SerializedName("gists_url")
     val gistsURL: GistsURL,
+    @SerializedName("starred_url")
     val starredURL: StarredURL,
+    @SerializedName("subscriptions_url")
     val subscriptionsURL: String,
+    @SerializedName("organizations_url")
     val organizationsURL: String,
+    @SerializedName("repos_url")
     val reposURL: String,
+    @SerializedName("events_url")
     val eventsURL: EventsURL,
+    @SerializedName("received_events_url")
     val receivedEventsURL: String,
     val type: Type,
+    @SerializedName("site_admin")
     val siteAdmin: Boolean
 )
 
