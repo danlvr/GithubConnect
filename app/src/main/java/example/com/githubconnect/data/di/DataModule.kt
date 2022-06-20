@@ -2,6 +2,8 @@ package example.com.githubconnect.data.di
 
 import android.util.Log
 import com.google.gson.GsonBuilder
+import example.com.githubconnect.data.repositories.RepositoryImplementation
+import example.com.githubconnect.data.repositories.RepositoryRepositories
 import example.com.githubconnect.data.services.GitHubService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,14 +12,13 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.math.sin
 
 object DataModule {
 
     private const val OK_HTTP = "OkHttp"
 
     fun load() {
-        loadKoinModules(networkModules())
+        loadKoinModules(networkModules() + repositoriesModule())
     }
 
     private fun networkModules(): Module {
@@ -45,7 +46,19 @@ object DataModule {
         }
     }
 
-    private inline fun <reified T> createService(client: OkHttpClient, factory: GsonConverterFactory): T {
+    private fun repositoriesModule(): Module {
+        return module {
+            single<RepositoryRepositories> {
+                RepositoryImplementation(get())
+            }
+        }
+
+    }
+
+    private inline fun <reified T> createService(
+        client: OkHttpClient,
+        factory: GsonConverterFactory
+    ): T {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .client(client)
